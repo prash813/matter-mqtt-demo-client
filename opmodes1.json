@@ -1,0 +1,6 @@
+{
+	"operationmodes": [
+		{ "name":"ShowTime 3", "devops":[{"devicename":"bulb2", "cmdname":"On", "endpoint": "1"}]},
+		{ "name":"ShowTime 4", "devops":[{"devicename":"bulb2", "cmdname":"Off", "endpoint": "1"}]}
+		]
+}

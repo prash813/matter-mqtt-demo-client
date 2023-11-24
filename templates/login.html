@@ -1,0 +1,229 @@
+<html>
+<head>
+<link rel="stylesheet" href= "{{ url_for('static',filename='loginstyle.css') }}">
+</head>
+<body onload="buttonstatuscall()">
+<div class="divmaster" id=demomaster>
+<p class="tryitout" id="tryit" >Try it out!</p>
+<img src="{{ url_for('static',filename='plus_100x100.png') }}" id="plussign" width="100" height="100" class="plussign" >
+<img src="{{ url_for('static',filename='matter_logo_420_90.png') }}" id="matterimg" width="420" height="90" class="matterimage" >
+<img src="{{ url_for('static',filename='ubuntu_image_400x93.png') }}" id="uimage" width="400" height="93" class="ubuimage" >
+<div class="div1" id="demo">
+<input    class="image1" type="image" id="img1" name="pbulb1" src="{{ url_for('static',filename='bulb_off_100x100.png') }}"  ></input>
+<p class="tryitout1" id="tryit1" style="visibility:hidden;"></p>
+<button class="btn1" src="color1.png" type="button" id="btn1" name="pbulb1" onclick="loadXMLDoc(event)" >Commission</button>
+<h3 id ="ipaddr" style="display:none">{{ ipaddr }}</h3>
+<h3 id="bulbstate" style="display:none">undefined</h3>
+<h3 id ="bulb1cmsstate" style="display:none">{{ bulb1state }}</h3>
+<h3 id ="bulb2cmsstate" style="display:none">{{ bulb2state }}</h3>
+</div>
+<div class="div2" id="demo1">
+<input    class="image1" type="image" id="img2" name="pbulb2" src="{{ url_for('static',filename='bulb_off_100x100.png') }}"  ></input>
+<p class="tryitout1" id="tryit2" style="visibility:hidden;"></p>
+<button class="btn1" src="color1.png" type="button" id="btn2" name="pbulb2" onclick="loadXMLDoc(event)" >Commission</button>
+<h3 id="bulbstate2" style="display:none">undefined</h3>
+</div>
+<div class="div4" id="demo2">
+<input    class="image2" type="image" id="img3" name="discobulb" src="{{ url_for('static',filename='disco_ball_150x150.png') }}"></input>
+<button class="btn2" src="color1.png" type="button" id="btn3" name="bridge1" onclick="loadXMLDoc(event)" >Commission Bridge</button>
+<h3 id ="bridge1cmsstate" style="display:none">{{ bridge1state }}</h3>
+<h3 id="discobulbstate" style="display:none">undefined</h3>
+</div>
+<div class="div5" id="demo3">
+<input class="image2" type="image" id="img4" name="partymode" src="{{ url_for('static',filename='partymode_150x150.png') }}"></input>
+<h3 id="partymodestate" style="display:none">undefined</h3>
+</div>
+</div> 
+<script>
+function buttonstatuscall(){
+
+	document.getElementById("tryit").style.visibility='visible';
+    document.getElementById("plussign").style.visibility='visible';
+    document.getElementById("matterimg").style.visibility='visible';
+    document.getElementById("uimage").style.visibility='visible';
+
+
+
+	var tmp1 = document.getElementById("bulb1cmsstate");
+	var btn1 = document.getElementById("btn1");
+	var img1 = document.getElementById("img1");
+
+	var tmp2 = document.getElementById("bulb2cmsstate");
+	var btn2 = document.getElementById("btn2");
+	var img2 = document.getElementById("img2");
+	
+
+	var tmp3 = document.getElementById("bridge1cmsstate");
+	var btn3 = document.getElementById("btn3");
+	var img3 = document.getElementById("img3");
+	if(tmp1.innerHTML == "commissioned"){
+		btn1.style.visibility='hidden';
+		img1.style.visibility='visible';
+		img1.addEventListener("click", onimg1click);
+	}
+	if(tmp2.innerHTML == "commissioned"){
+		btn2.style.visibility='hidden';
+		img2.style.visibility='visible';
+		img2.addEventListener("click", onimg1click);
+	}
+	if(tmp3.innerHTML == "commissioned"){
+
+		btn1.style.visibility='hidden';
+		img1.style.visibility='visible';
+		img1.addEventListener("click", onimg1click);
+
+
+		btn2.style.visibility='hidden';
+		img2.style.visibility='visible';
+		img2.addEventListener("click", onimg1click);
+
+
+		btn3.style.visibility='hidden';
+
+		img3.style.visibility = 'visible';
+		img4.style.visibility = 'visible';
+		img3.addEventListener("click", onimg1click);
+		img4.addEventListener("click", onimg1click);
+	}
+}
+
+function onimg1click(evt) {
+	var btn1 = evt.target 
+	var widname=btn1.name;
+	var xhttp = new XMLHttpRequest();
+
+	var bulbstate = document.getElementById("bulbstate");
+	if(widname == "pbulb2"){
+		bulbstate = document.getElementById("bulbstate2");
+	}
+	else if(widname == "discobulb"){
+		bulbstate = document.getElementById("discobulbstate");
+	}
+	else if(widname == "partymode"){
+		bulbstate = document.getElementById("partymodestate");
+	}	
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var responseTxt = JSON.parse(this.responseText);
+			let str = responseTxt.Command;
+			if(responseTxt.CmdRes=="Success") {
+				var state = "Onstate " + str;	
+				alert(state);
+				if(widname == "pbulb1" || widname == "pbulb2"){
+					if(str == "on")
+						btn1.src = "{{ url_for('static',filename='bulb_on_100x124.png') }}";
+					else if(str == "off")
+						btn1.src = "{{ url_for('static',filename='bulb_off_100x100.png') }}";
+				}
+
+				bulbstate.innerHTML = str; 	
+				//alert("This bulb is paired.");
+				//var btn1 = document.getElementById("btn1");
+				//btn1.value="Commissioned";
+				//btn1.disabled=true;
+				//btn1.innerHTML="Commissionedd";
+
+				//widname=btn1.name
+				//alert(btn1.name);
+				//var image1 = document.getElementById("img1");
+				//image1.style.visibility='visible';
+				//image1.addEventListener("click", onimg1click);
+				//image1.src = "{{ url_for('static',filename='color1.jpg') }}";
+			}
+		
+
+		}
+	};
+	var ipaddr=document.getElementById("ipaddr");
+	var random1=Math.random();
+	if(bulbstate.innerHTML != "on" && bulbstate.innerHTML != "off") 
+	{
+		var state = "undefined state";	
+		alert(state);
+		bulbstate.innerHTML = "off"; 	
+
+	}
+	var request="http://"  + ipaddr.innerHTML + ":" + "5001/login?" +  "name=" + widname  + "&version=" + random1 + "&bulbstate=" + bulbstate.innerHTML;
+	// alert(ipaddr.innerHTML);
+	//xhttp.open("GET", "http://192.168.1.63:5000/login", true);
+	alert(request);
+	xhttp.open("GET", request, true);
+	xhttp.send();
+}
+
+function loadXMLDoc(evt) {
+	var btn1 = evt.target;
+	var widname=btn1.name
+		var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			//document.getElementById("demo").innerHTML =
+			var responseTxt = JSON.parse(this.responseText);
+			if(responseTxt.Pairing=="Success")
+			{
+				//alert("This bulb is paired.");
+				btn1.value="Commissioned";
+				btn1.disabled=true;
+				btn1.innerHTML="Commissioned";
+				widname=btn1.name
+					var result="pairing: " + responseTxt.Pairing + " NodeId: " + responseTxt.nodeid;
+				alert(result);
+				if(btn1.name == "pbulb1"){
+					var image1 = document.getElementById("img1");
+					image1.style.visibility='visible';
+					image1.addEventListener("click", onimg1click);
+				}
+				else if(btn1.name == "pbulb2") {
+					var image1 = document.getElementById("img2");
+					image1.style.visibility='visible';
+					image1.addEventListener("click", onimg1click);
+				}
+				else if(btn1.name == "bridge1"){
+					var image1 = document.getElementById("img1"); //bulb1
+					image1.addEventListener("click", onimg1click);
+					image1.style.visibility='visible';
+
+					var image2 = document.getElementById("img2"); //bulb2 
+					image2.addEventListener("click", onimg1click);
+					image2.style.visibility='visible';
+
+					var image3 = document.getElementById("img3"); //discoball
+					image3.addEventListener("click", onimg1click);
+					image3.style.visibility='visible';
+
+					var image4 = document.getElementById("img4"); //party mode
+					image4.addEventListener("click", onimg1click);
+					image4.style.visibility='visible';
+
+					var btn2 = document.getElementById("btn1"); //commission button1
+					btn2.style.visibility='hidden';
+
+					var btn3 = document.getElementById("btn2"); //commission button2
+					btn3.style.visibility='hidden';
+				}
+				btn1.style.visibility='hidden';
+			}
+			else 
+			{
+				var result="pairing: " + responseTxt.Pairing;
+				alert(result);
+			}
+
+		}
+	};
+	var ipaddr=document.getElementById("ipaddr");
+	var random1=Math.random();
+	var secondreqarg="&bulbstate=commission";
+	if(btn1.name == "bridge1"){
+		secondreqarg = "&bulbstate=commissionbridge";
+	}
+	var request="http://"  + ipaddr.innerHTML + ":" + "5001/login?" +  "name=" + widname + secondreqarg + "&version=" + random1;
+	// alert(ipaddr.innerHTML);
+	//xhttp.open("GET", "http://192.168.1.63:5000/login", true);
+	alert(request);
+	xhttp.open("GET", request, true);
+	xhttp.send();
+}
+  </script>
+ </body>
+</html>

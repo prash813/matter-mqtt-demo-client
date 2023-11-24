@@ -1,0 +1,149 @@
+body {
+  background-color: darkgrey; /*lightblue;*/
+}
+.divmaster {
+
+  position: absolute;
+  display: inline-block;
+}
+.divmaster > * {
+ display: inline-block;
+}
+.tryitout {
+  position: absolute;
+  display: inline-block;
+  font-size:80px;
+  color:rgb(255, 255, 255);
+  left:420px;
+  top:50px;
+  width:500;
+  visibility:hidden;
+}
+.plussign {
+
+  position: absolute;
+  display: inline-block;
+  left: 600px;
+  top: 5px;
+  visibility:hidden;
+}
+.matterimage {
+
+  position: absolute;
+  display: inline-block;
+  left: 20px;
+  top: 5px;
+  visibility:hidden;
+}
+.ubuimage {
+  position: absolute;
+  display: inline-block;
+  right: -1280px;
+  top: 5px;
+  visibility:hidden;
+}
+.div1 {
+  position: absolute;
+  display: inline-block;
+  left: 200px;
+  top:  250px;
+}
+.div1 > * {
+ display: inline-block;
+}
+.div2 {
+  position: absolute;
+  display: inline-block;
+  left: 400px;
+  top:  250px;
+}
+.div2 > * {
+ display: inline-block;
+}
+.btn1 {
+  background-color: red; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  src: "color1.png";
+}
+.btn2 {
+  background-color: red; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  src: "color1.png";
+}
+.image1 {
+  background-color: transparent; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  width: 100px;
+  height: 124px;
+  visibility:hidden;
+}
+.image2 {
+  background-color: transparent; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  width: 150px;
+  height: 150px;
+  visibility:hidden;
+}
+.div3 {
+
+  position: absolute;
+  left: 400px;
+  top:  150px;
+}
+.div3 > * {
+
+ display: block
+
+}
+.div4 {
+
+  position: absolute;
+  left: 600px;
+  top:  250px;
+  display: inline-block
+}
+.div4 > * {
+
+ display: inline-block
+
+}
+.div5 {
+
+  position: absolute;
+  left: 800px;
+  top:  250px;
+  display: inline-block
+}
+.div5 > * {
+
+ display: inline-block
+
+}
+.textbox {
+	
+  display: block;
+}

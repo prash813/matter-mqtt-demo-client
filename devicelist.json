@@ -1,0 +1,76 @@
+{
+	"devices": [{
+		"devicename": "bridge1",
+		"nativenw": "wifi",
+		"type": "bridge",
+		"pairing-opt": ["ble-wifi", {"ssid": "pras93784549_EXT", "passwd":"Prashant!23", "PINCode":"20202021", "Discriminator":"3840"}],
+		"nodeid":"1",
+		"devicelist":		[
+		{
+			"devicename": "bulb3",
+			"type": "light",
+			"ProducID": "1115",
+			"VendorID": "115",
+			"deviceno": "2"
+		}]
+		},
+		
+		{
+			"devicename": "bulb1",
+			"pairing-opt": ["ethernet", {"PINCode":"20202021", "Discriminator":"3840", "ip":"192.168.1.31", "port": "5540"}],
+			"nodeid": "2",
+			"type": "light",
+			"ProducID": "1111",
+			"VendorID": "111"
+
+		},
+		{
+			"devicename": "plug1",
+			"pairing-opt": ["onnetwork", {"PINCode":"20202021"}],
+			"nodeid": "3",
+			"type": "plug",
+			"ProducID": "1112",
+			"VendorID": "112"
+
+		},
+		{
+			"devicename": "switch1",
+			"pairing-opt": ["ble-wifi", {"ssid": "pras93784549_EXT", "passwd":"Prashant!23", "PINCode":"20202021", "Discriminator":"3840"}],
+			"nodeid": "4",
+			"type": "light switch",
+			"ProducID": "1113",
+			"VendorID": "113"
+
+		},
+		{
+			"devicename": "musicplayer",
+			"pairing-opt": ["ethernet", {"PINCode":"20202021", "Discriminator":"3840", "ip":"192.168.1.31", "port": "5544"}],
+			"nodeid": "5",
+			"type": "light",
+			"ProducID": "1111",
+			"VendorID": "111"
+
+		},
+		{
+			"devicename": "simulated",
+			"pairing-opt": ["ethernet", {"PINCode":"20202021", "Discriminator":"3840", "ip":"192.168.1.31", "port": "5543"}],
+			"nodeid": "6",
+			"type": "light",
+			"ProducID": "1111",
+			"VendorID": "111"
+
+		},
+		{
+			"devicename": "bulb2",
+			"pairing-opt": ["code-thread", {"thnwopsDataset":"hex:0e080000000000010000000300000b35060004001fffe002085879ea1e218553ba0708fd0e47fe4e8ec9c205102aaeb90ede8f5d4e5bf54ab1dd4af582030f4f70656e5468726561642d3462313201024b120410f13a6eecacb64499fd0d13ed8a7f4f890c0402a0f7f8", "QRCode":"MT:CWBT0IAN16NBQM5F210", "productiondev":"1"}],
+			"nodeid":"7",
+			"type": "light",
+			"ProducID": "1114",
+			"VendorID": "114"
+		}	
+	]
+
+
+}
+
+

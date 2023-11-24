@@ -1,0 +1,18 @@
+{
+	"operationmodes": [
+		{"name": "ShowTime 1", "devops":[{"devicename":"bulb1", "cmdname":"On", "color":"Red", "saturation":"100", "brightness":"100", "endpoint": "1"},
+		 {"devicename":"musicplayer", "cmdname":"StartMusic",  "endpoint": "1"},
+		 {"devicename":"plug1", "cmdname":"On", "endpoint": "1"},
+		 {"devicename":"simulated", "cmdname":"On", "endpoint": "1"}
+		]},
+		{"name":"ShowTime 2",
+		"devops":[{"devicename":"bulb1", "cmdname":"Off","endpoint": "1" },
+		 {"devicename":"musicplayer", "cmdname":"StopMusic", "endpoint": "1"},
+		 {"devicename":"plug1", "cmdname":"Off", "endpoint": "1"},
+		 {"devicename":"bulb1", "cmdname":"On", "color":"Green", "saturation":"70", "Brightness":"60", "endpoint": "1"}
+		]},
+		{ "name":"ShowTime 3", "devops":[{"devicename":"bulb2", "cmdname":"On", "endpoint": "1"},{"devicename":"plug1", "cmdname":"On", "endpoint": "1"}]},
+		{ "name":"ShowTime 4", "devops":[{"devicename":"bulb2", "cmdname":"Off", "endpoint": "1"}]},
+		{"name":"ShowTime 5", "devops":[{"devicename":"bulb2", "cmdname":"On", "color": "Red", "saturation":"100", "brightness":"100", "endpoint": "1"}]}
+		]
+}

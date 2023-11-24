@@ -1,0 +1,8 @@
+#! /bin/sh
+
+echo "configure hook is running"
+[ -n "$(snapctl get nwiface)" ] || snapctl set nwiface="eth0"
+[ -n "$(snapctl get debug)" ] || snapctl set debug="false"
+
+#snapctl restart ${SNAP_NAME}.devicepairing
+#snapctl restart ${SNAP_NAME}.matterdemo

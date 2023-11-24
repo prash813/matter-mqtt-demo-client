@@ -1,0 +1,13 @@
+<html>
+<head>
+	  <script type = "text/javascript"  src="{{ url_for('static', filename='js/devicedemo_info_nodbg.js') }}"></script>
+</head>
+<body>
+<div id="divdata" style="display:inline-block";>{{ ipaddr }}</div>
+<h3 id ="ipaddr" style="display:none">{{ ipaddr }}</h3>
+
+<script>
+onloadfunction('{{devicedemolist|tojson|safe}}');
+</script>
+</body>	
+</html>

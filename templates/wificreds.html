@@ -1,0 +1,52 @@
+<html>
+<head>
+<link rel="stylesheet" href= "{{ url_for('static',filename='loginstyle.css') }}">
+</head>
+<body>
+<div class="div3">
+<form action="{{ url_for('logifun') }}" method="post">
+  Wifi ssid: <input type="text" class="textbox" id="hh1" name="fname">
+  <br>
+  <br>
+  <label for="pwd">Password:</label> 
+  <input type="password" class="textbox" id="pwd" name="pwd" minlength="8">
+  <br>
+  <br>
+  device IP: <input type="text" class="textbox" id="hh1" name="ipaddress">
+  <br><br>
+  <input type="submit" value="Submit">
+  <h3 id ="ipaddr" style="display:none">{{ ipaddr }}</h3>
+</form>
+</div>
+<script>
+function PasswordEntry() {
+  var xhttp = new XMLHttpRequest();
+
+  elem1=document.getElementById("hh1");
+  elem2=document.getElementById("pwd");
+  alert(elem2.value);
+  alert(elem1.value);
+  //xhttp.onreadystatechange = function() {
+	//  if (this.readyState == 4 && this.status == 200) {
+		  //document.getElementById("demo").innerHTML =
+	//	  var responseTxt = JSON.parse(this.responseText);
+	//	  alert(responseTxt.creds);
+	  //}
+
+   // }
+
+	var ipaddr=document.getElementById("ipaddr");
+  	var random1=Math.random();
+    var request="http://"  + ipaddr.innerHTML + ":" + "5001/wificreds?" +  "ssid=" + elem1.value + "&password=" + elem2.value + "&version=" + random1;
+ // alert(ipaddr.innerHTML);
+  //xhttp.open("GET", "http://192.168.1.63:5000/login", true);
+  alert(request);
+  xhttp.open("GET", request, true);
+  xhttp.send();
+	
+  }	
+
+</script>
+</body>
+</html>
+

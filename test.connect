@@ -1,0 +1,8 @@
+snap connect  matter-hauto-demo:avahi-control :avahi-control
+snap connect  matter-hauto-demo:avahi-observe :avahi-observe
+snap connect  matter-hauto-demo:bluez 
+snap connect  matter-hauto-demo:exec-plug chip-tool:exec-slot
+snap connect  matter-hauto-demo:hardware-observe
+snap connect  matter-hauto-demo:network-control :network-control
+snap connect  matter-hauto-demo:physical-memory-control
+

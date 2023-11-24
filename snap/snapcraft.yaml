@@ -1,0 +1,90 @@
+name: matter-hauto-demo
+base: core22
+version: '0.1'
+summary: A demo to show lights plugs on Matter Home Network
+description: |
+  Matter demo for CES;
+  devicepairing for adding devices to matter network. To add the device modify devilist.json file. 
+  matterdemo which will help control devices to operate in some sequence as defined in opmodes.json file. 
+grade: stable
+confinement: strict
+
+apps:
+  matterdemo:
+    command: matterdemo.sh
+    #daemon: simple
+    environment:
+      PATH: ${PATH}:$SNAP/extra-bin/
+      TMPDIR: "/mnt"
+
+    plugs:
+      - hardware-observe
+      - network
+      - network-bind
+      - physical-memory-control
+      - network-control  
+      - bluez
+      - avahi-control
+      - avahi-observe  
+
+  devicepairing:
+    #command: bin/python3 $SNAP/app.py
+    command: pywrapper.sh 
+    daemon: simple
+    environment:
+      PATH: ${PATH}:$SNAP/extra-bin/
+      TMPDIR: "/mnt"
+    plugs:
+      - hardware-observe
+      - network
+      - network-bind
+      - physical-memory-control
+      - network-control  
+      - bluez
+      - avahi-control
+      - avahi-observe  
+parts:
+  py-packages:
+    plugin: python
+    source: .   
+      #stage-packages:
+      #- python3      
+      #- python3-minimal
+      #- python3-venv        
+    python-packages:
+      - python-dateutil
+      #- RPi.GPIO
+      - flask
+      - flask-restful
+      #- dht11
+      - paho-mqtt
+    build-packages:
+      - build-essential
+  flask-server:
+    plugin: dump
+    source: . 
+    override-pull: |
+      snapcraftctl pull
+      #cp ${SNAPCRAFT_PROJECT_DIR}/app.py ${SNAPCRAFT_PART_SRC}/Webserver/
+      mkdir -p ${SNAPCRAFT_PART_SRC}/Webserver 
+      cp ${SNAPCRAFT_PROJECT_DIR}/firstapp.py ${SNAPCRAFT_PART_SRC}/Webserver/
+      cp ${SNAPCRAFT_PROJECT_DIR}/thirdapp.py ${SNAPCRAFT_PART_SRC}/Webserver/
+      cp ${SNAPCRAFT_PROJECT_DIR}/OpModes.py ${SNAPCRAFT_PART_SRC}/Webserver/
+      cp ${SNAPCRAFT_PROJECT_DIR}/pywrapper.sh ${SNAPCRAFT_PART_SRC}/Webserver/
+      cp ${SNAPCRAFT_PROJECT_DIR}/matterdemo.sh ${SNAPCRAFT_PART_SRC}/Webserver/
+      cp -r ${SNAPCRAFT_PROJECT_DIR}/templates ${SNAPCRAFT_PART_SRC}/Webserver/
+      cp -r ${SNAPCRAFT_PROJECT_DIR}/static ${SNAPCRAFT_PART_SRC}/Webserver/
+           
+    organize:
+      Webserver: /
+    stage:
+      - -test*
+      - -README.md
+plugs:
+  exec-plug:
+    interface: content
+    content: executables
+    target:  $SNAP/extra-bin
+layout:
+  /mnt:
+    bind: $SNAP_DATA/mnt     
