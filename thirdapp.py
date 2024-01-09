@@ -1,4 +1,6 @@
-from flask import Flask, request
+
+import tinytuya_monitor as tinytuyaapp
+from flask import Flask, request jsonify
 from flask import render_template
 from devicelist import DeviceList
 from OpModes import OpModes 
@@ -6,8 +8,12 @@ from matterbulbop import MatterBulbOp
 import os
 import subprocess
 import json
+from threading import Thread
 import paho.mqtt.client as mqtt
 import time
+import sys
+TuyaPlug1 = None
+TuayaPlug2 =  None
 devicelist1 = None
 reqipaddr = None
 DeviceDataBase= None
@@ -26,6 +32,9 @@ def getip():
     s = subprocess.check_output([ipstring], stdin=None, stderr=None, shell=True, universal_newlines=True)
     if len(s) != 0:
         reqipaddr = s[0:len(s)-1]
+
+def TuyaDeviceData(pluginst):
+    pluginst.ReceiveDeviceData()
 
 def CheckForPairingSuccess(pathname, nodeid):
     try:
@@ -83,6 +92,29 @@ def PairCall():
     s1 = CheckForPairingSuccess(snapdatacomvar, pairparams[0])
     pahoclient.publish("PairRes", json.dumps(s1))
     #return json.dumps(s1)
+
+def RenderDevicestat():
+       global TuyaPlug1
+       global TuyaPlug2
+       global devicelist1
+       data={}
+       list=[]
+       for dev in devicelist1:
+           if dev["type"] == "plug":
+               if dev["name"] == "plug1":
+                   elecconsumption, data = TuyaPlug1.Getdata()
+               elif dev["name"] == "plug2":
+                   elecconsumption, data = TuyaPlug2.Getdata()
+           if dev["type"] == "plug":        
+               print(data)
+               sys.stdout.flush()
+               if elecconsumption != 0 and data["CurVoltage"] != "InValid":
+                   data["CurPwrUsage"] = str(elecconsumption);
+               list.append(data)    
+       print(list)
+       var1=jsonify(listdata=list)
+       pahoclient.publish("devicestatresp", json.dumps(var1))
+    
 
 
 def QueueTheOperations(listops):
@@ -196,6 +228,15 @@ def hello_world():
     demolist = OpModes.GetDemoList(OperationModesDb["operationmodes"])
     print(demolist)
     Spawn_Paho() #LooP FUnction
+    devstat = os.environ.get('DEVSTATS')
+    if devstat == "ON":
+        TuyaPlug1 = tinytuyaapp.TinyTuyaPlugData("plug1", 'd774d88399af8258ddjmjz', "192.168.1.83", 'U/$B2?kq|iO8}l`j')
+        TuyaPlug2 = tinytuyaapp.TinyTuyaPlugData("plug2", "d7934fd0d469f1b0d6lmza", "192.168.1.80", "3769c7cba9b2d5ba")
+    
+        t2= Thread(target=TuyaDeviceData, args=(TuyaPlug2,))
+        t2.start()
+        t1= Thread(target=TuyaDeviceData, args=(TuyaPlug1,))
+        t1.start()
     return "Success"
     #return render_template('/devicedemo.html', ipaddr=reqipaddr, devicedemolist=demolist)
 

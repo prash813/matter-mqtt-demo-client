@@ -44,20 +44,26 @@ apps:
       - avahi-control
       - avahi-observe  
 parts:
-  py-packages:
+  tinytuya:
     plugin: python
-    source: .   
-      #stage-packages:
-      #- python3      
-      #- python3-minimal
-      #- python3-venv        
+    source: https://github.com/jasonacox/tinytuya.git
+    override-build: |
+      snapcraftctl build
+
+      cat << EOF > tuyascan.sh
+      #!/bin/sh
+        python3 -m tinytuya scan  
+      EOF
+      chmod +x tuyascan.sh
+      cp tuyascan.sh $SNAPCRAFT_PART_INSTALL/
     python-packages:
+      - colorama
+      - cryptography
+      - requests
       - python-dateutil
-      #- RPi.GPIO
-      - flask
+      - flask  
       - flask-restful
-      #- dht11
-      - paho-mqtt
+      - paho-mqtt  
     build-packages:
       - build-essential
   flask-server:
